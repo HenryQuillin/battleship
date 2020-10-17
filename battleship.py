@@ -9,6 +9,8 @@ Battleship
 # Battleships will only take up one space
 # You will play against the computer
 
+import random
+
 def welcome_msg():
     # Print out the welcome message
 
