@@ -4,12 +4,45 @@ Henry Quillin
 Battleship
 '''
 
+def intro():
+    print('Welcome to Battleship')
 
+board = [
+    ["~", "~", "~", "~", "~"],
+    ["~", "~", "~", "~", "~"],
+    ["~", "~", "~", "~", "~"],
+    ["~", "~", "~", "~", "~"],
+    ["~", "~", "~", "~", "~"],
+]
+print(board)
+
+
+def drawboard():
+    for i in range(5):
+        for j in range(5):
+            board[i][j] = '~'
+
+    for i in range(5):
+        print(board[i])
+
+    print(f'''
+        0 1 2
+       _______
+    0 | {board[0][0]}|{board[0][1]}|{board[0][2]} |
+      | -+-+- | 
+    1 | {board[1][0]}|{board[1][1]}|{board[1][2]} |
+      | -+-+- |                                    
+    2 | {board[2][0]}|{board[2][1]}|{board[2][2]} | 
+       -------
+    ''')
+
+intro()
+drawboard()
+
+'''
 # In the first version of my battleship game, the board will be a 5 x 5 board with letters on the x - axis and numbers on the y axis
 # Battleships will only take up one space
 # You will play against the computer
-
-import random
 
 def welcome_msg():
     # Print out the welcome message
@@ -51,3 +84,5 @@ def gameplay():
 	# Will loop through user_turn() and comp_turn()
 	# Check if win_condition = True
 		# If True: run endgame()
+'''
+
