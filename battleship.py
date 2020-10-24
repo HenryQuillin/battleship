@@ -3,9 +3,12 @@ Henry Quillin
 10/16/2020
 Battleship
 '''
+import random
+
 
 def intro():
     print('Welcome to Battleship')
+
 
 board = [
     ["~", "~", "~", "~", "~"],
@@ -14,7 +17,23 @@ board = [
     ["~", "~", "~", "~", "~"],
     ["~", "~", "~", "~", "~"],
 ]
-print(board)
+comp_board = [
+    ["~", "~", "~", "~", "~"],
+    ["~", "~", "~", "~", "~"],
+    ["~", "~", "~", "~", "~"],
+    ["~", "~", "~", "~", "~"],
+    ["~", "~", "~", "~", "~"],
+]
+
+
+
+def draw_comp_board():
+    '''for i in range(5):
+        for j in range(5):
+            comp_board[i][j] = '~'''''
+
+    for i in range(5):
+        print(comp_board[i])
 
 
 def drawboard():
@@ -36,8 +55,26 @@ def drawboard():
        -------
     ''')
 
-intro()
-drawboard()
+
+def comp_place_ships():
+
+    i = 0
+    while i < 5:
+        row = random.randint(0, 4)
+        col = random.randint(0, 4)
+        if comp_board[row][col] != 'X':
+            comp_board[row][col] = 'X'
+            i = i + 1
+            print(i)
+            print(row, col)
+        draw_comp_board()
+
+
+
+
+
+comp_place_ships()
+
 
 '''
 # In the first version of my battleship game, the board will be a 5 x 5 board with letters on the x - axis and numbers on the y axis
@@ -85,4 +122,3 @@ def gameplay():
 	# Check if win_condition = True
 		# If True: run endgame()
 '''
-
