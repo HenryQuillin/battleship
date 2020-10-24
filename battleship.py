@@ -57,7 +57,7 @@ def drawboard():
 
 
 def comp_place_ships():
-
+    global comp_board
     i = 0
     while i < 5:
         row = random.randint(0, 4)
