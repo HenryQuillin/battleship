@@ -61,7 +61,7 @@ def user_place_ships():
         user_ships_input = input(f'Please enter the location of ship number {ship + 1} (example:A3) -> ')
         user_ship_letter = user_ships_input[0]
         user_ship_num = int(user_ships_input[1])
-        board[user_ship_num][letter2num[user_ship_letter]] = 'X'
+        board[user_ship_num][letter2num[user_ship_letter]] = 'O'
         drawboard(board)
 
 def comp_place_ships():
@@ -70,8 +70,8 @@ def comp_place_ships():
     while i < 5:
         row = random.randint(0, 4)
         col = random.randint(0, 4)
-        if comp_board[row][col] != 'X':
-            comp_board[row][col] = 'X'
+        if comp_board[row][col] != 'O':
+            comp_board[row][col] = 'O'
             i = i + 1
 
 
@@ -85,7 +85,7 @@ def user_turn():
     if battlefield[user_guess_num][user_guess_letter] == 'X' or battlefield[user_guess_num][user_guess_letter] == 'v' :
         print(f"We have already fired in that location!")
         user_turn()
-    elif comp_board[user_guess_num][user_guess_letter] == 'X':
+    elif comp_board[user_guess_num][user_guess_letter] == 'O':
         comp_ships_left -= 1
         print(f"That's a hit! We have sunk one of the enemy ships! There are {comp_ships_left} left")
         battlefield[user_guess_num][user_guess_letter] = 'X'
@@ -98,9 +98,13 @@ def user_turn():
 def comp_turn():
     row = random.randint(0, 4)
     col = random.randint(0, 4)
-    if comp_board[row][col] != 'X':
-        comp_board[row][col] = 'X'
-        i = i + 1
+    if board[row][col] != 'v' and board[row][col] != 'X':
+        print('The enemy has missed our battleships')
+        board[row][col] = 'v'
+    elif board[row][col] == 'O':
+        board[row][col] = 'X'
+        print('The enemy has sunk one of our battleships!')
+    drawboard(board)
 
 def wincheck():
     return True
@@ -120,6 +124,7 @@ def gameplay():
     comp_place_ships()
     while wincheck():
         user_turn()
+        comp_turn()
         wincheck()
 
 
