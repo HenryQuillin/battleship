@@ -5,6 +5,7 @@ Battleship
 '''
 import random
 
+
 def intro():
     print('Welcome to Battleship')
 
@@ -15,13 +16,15 @@ board = [
     ["~", "~", "~", "~", "~"],
     ["~", "~", "~", "~", "~"],
     ["~", "~", "~", "~", "~"],
+    'Friendly Waters'
 ]
 battlefield = [
-    ["X", "~", "~", "~", "~"],
     ["~", "~", "~", "~", "~"],
     ["~", "~", "~", "~", "~"],
     ["~", "~", "~", "~", "~"],
     ["~", "~", "~", "~", "~"],
+    ["~", "~", "~", "~", "~"],
+    'Enemy Waters'
 ]
 comp_board = [
     ["X", "X", "X", "X", "~"],
@@ -29,6 +32,7 @@ comp_board = [
     ["X", "~", "~", "~", "~"],
     ["~", "~", "~", "~", "~"],
     ["~", "~", "~", "~", "~"],
+    'Enemy Waters'
 ]
 letter2num = {
     "A": 0,
@@ -41,8 +45,15 @@ letter2num = {
 comp_ships_left = 5
 user_ships_left = 5
 
+
 def drawboard(board):
+    if board == battlefield:
+        location = 'Enemy Waters'
+    else:
+        location = 'Friendly Waters'
     print(f'''
+     {board[5]}
+           --
         A B C D E 
        ___________
     0 | {board[0][letter2num['A']]} {board[0][letter2num['B']]} {board[0][letter2num['C']]} {board[0][letter2num['D']]} {board[0][letter2num['E']]} |                                  
@@ -52,6 +63,7 @@ def drawboard(board):
     4 | {board[4][letter2num['A']]} {board[4][letter2num['B']]} {board[4][letter2num['C']]} {board[4][letter2num['D']]} {board[4][letter2num['E']]} |
        -----------
     ''')
+
 
 def user_place_ships():
     global board
@@ -63,6 +75,7 @@ def user_place_ships():
         user_ship_num = int(user_ships_input[1])
         board[user_ship_num][letter2num[user_ship_letter]] = 'O'
         drawboard(board)
+
 
 def comp_place_ships():
     global comp_board
@@ -78,11 +91,12 @@ def comp_place_ships():
 def user_turn():
     global comp_ships_left
     global battlefield
+
     drawboard(battlefield)
     user_guess = input('Commander where should we fire? (example:B3) -> ')
     user_guess_letter = (letter2num[user_guess[0]])
     user_guess_num = int(user_guess[1])
-    if battlefield[user_guess_num][user_guess_letter] == 'X' or battlefield[user_guess_num][user_guess_letter] == 'v' :
+    if battlefield[user_guess_num][user_guess_letter] == 'X' or battlefield[user_guess_num][user_guess_letter] == 'v':
         print(f"We have already fired in that location!")
         user_turn()
     elif comp_board[user_guess_num][user_guess_letter] == 'O':
@@ -90,47 +104,58 @@ def user_turn():
         print(f"That's a hit! We have sunk one of the enemy ships! There are {comp_ships_left} left")
         battlefield[user_guess_num][user_guess_letter] = 'X'
         drawboard(battlefield)
+
     else:
         print("That's a miss")
         battlefield[user_guess_num][user_guess_letter] = 'v'
         drawboard(battlefield)
 
+
+
 def comp_turn():
     row = random.randint(0, 4)
     col = random.randint(0, 4)
-    if board[row][col] != 'v' and board[row][col] != 'X':
-        print('The enemy has missed our battleships')
-        board[row][col] = 'v'
-    elif board[row][col] == 'O':
+    if board[row][col] == 'O':
         board[row][col] = 'X'
         print('The enemy has sunk one of our battleships!')
-    drawboard(board)
+        drawboard(board)
+    elif board[row][col] == 'v' or board[row][col] == 'X':
+        comp_turn()
+    else:
+        board[row][col] = 'v'
+        print('The enemy has missed our battleship')
+        drawboard(board)
+
 
 def wincheck():
-    return True
     if user_ships_left <= 0:
-        return False
         print('The enemy has sunk all our battleships!')
+        return False
         exit()
     elif comp_ships_left <= 0:
-        return False
         print('Congratulations commander. We have sunk all enemy battleships!')
+        return False
         exit()
+    return True
 
 
 def gameplay():
     intro()
     user_place_ships()
+    print('Enemy ships have entered the AO!')
     comp_place_ships()
+    print('''
+    _      _      _      _      _      _      _      _
+    )`'-.,_)`'-.,_)`'-.,_)`'-.,_)`'-.,_)`'-.,_)`'-.,_)`'-.,_
+        ''')
     while wincheck():
         user_turn()
         comp_turn()
         wincheck()
 
 
-
-#comp_place_ships()
-#user_turn()
+# comp_place_ships()
+# user_turn()
 gameplay()
 
 '''
