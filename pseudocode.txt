@@ -1,22 +1,16 @@
 //
 output "Welcome to battleship"
 
+
 def drawboard():
-    for i in range(5):
-        for j in range(5):
-            board[i][j] = '~'
-
-    for i in range(5):
-        print(board[i])
-
-board =
-
-loop ROW from 0 to 5
-    loop COL from 0 to 5
-        board[ROW][COL] = '~'
+    loop ROW from 0 to 5
+        loop COL from 0 to 5
+            board[ROW][COL] = '~'
+        end loop
     end loop
-end loop
 
-loop ROW from 0 to 5
-    output board[ROW]
-end loop
+    loop ROW from 0 to 5
+        output board[ROW]
+    end loop
+
+def letter_to_num():

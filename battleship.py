@@ -5,7 +5,6 @@ Battleship
 '''
 import random
 
-
 def intro():
     print('Welcome to Battleship')
 
@@ -17,44 +16,53 @@ board = [
     ["~", "~", "~", "~", "~"],
     ["~", "~", "~", "~", "~"],
 ]
-comp_board = [
-    ["~", "~", "~", "~", "~"],
+battlefield = [
+    ["X", "~", "~", "~", "~"],
     ["~", "~", "~", "~", "~"],
     ["~", "~", "~", "~", "~"],
     ["~", "~", "~", "~", "~"],
     ["~", "~", "~", "~", "~"],
 ]
+comp_board = [
+    ["X", "X", "X", "X", "~"],
+    ["~", "~", "~", "~", "~"],
+    ["X", "~", "~", "~", "~"],
+    ["~", "~", "~", "~", "~"],
+    ["~", "~", "~", "~", "~"],
+]
+letter2num = {
+    "A": 0,
+    "B": 1,
+    "C": 2,
+    "D": 3,
+    "E": 4,
+}
 
+comp_ships_left = 5
+user_ships_left = 5
 
-
-def draw_comp_board():
-    '''for i in range(5):
-        for j in range(5):
-            comp_board[i][j] = '~'''''
-
-    for i in range(5):
-        print(comp_board[i])
-
-
-def drawboard():
-    for i in range(5):
-        for j in range(5):
-            board[i][j] = '~'
-
-    for i in range(5):
-        print(board[i])
-
+def drawboard(board):
     print(f'''
-        0 1 2
-       _______
-    0 | {board[0][0]}|{board[0][1]}|{board[0][2]} |
-      | -+-+- | 
-    1 | {board[1][0]}|{board[1][1]}|{board[1][2]} |
-      | -+-+- |                                    
-    2 | {board[2][0]}|{board[2][1]}|{board[2][2]} | 
-       -------
+        A B C D E 
+       ___________
+    0 | {board[0][letter2num['A']]} {board[0][letter2num['B']]} {board[0][letter2num['C']]} {board[0][letter2num['D']]} {board[0][letter2num['E']]} |                                  
+    1 | {board[1][letter2num['A']]} {board[1][letter2num['B']]} {board[1][letter2num['C']]} {board[1][letter2num['D']]} {board[1][letter2num['E']]} |
+    2 | {board[2][letter2num['A']]} {board[2][letter2num['B']]} {board[2][letter2num['C']]} {board[2][letter2num['D']]} {board[2][letter2num['E']]} |                                
+    3 | {board[3][letter2num['A']]} {board[3][letter2num['B']]} {board[3][letter2num['C']]} {board[3][letter2num['D']]} {board[3][letter2num['E']]} |
+    4 | {board[4][letter2num['A']]} {board[4][letter2num['B']]} {board[4][letter2num['C']]} {board[4][letter2num['D']]} {board[4][letter2num['E']]} |
+       -----------
     ''')
 
+def user_place_ships():
+    global board
+    print('Commander, where should we send our battleships?')
+    drawboard(board)
+    for ship in range(5):
+        user_ships_input = input(f'Please enter the location of ship number {ship + 1} (example:A3) -> ')
+        user_ship_letter = user_ships_input[0]
+        user_ship_num = int(user_ships_input[1])
+        board[user_ship_num][letter2num[user_ship_letter]] = 'X'
+        drawboard(board)
 
 def comp_place_ships():
     global comp_board
@@ -65,16 +73,60 @@ def comp_place_ships():
         if comp_board[row][col] != 'X':
             comp_board[row][col] = 'X'
             i = i + 1
-            print(i)
-            print(row, col)
-        draw_comp_board()
+
+
+def user_turn():
+    global comp_ships_left
+    global battlefield
+    drawboard(battlefield)
+    user_guess = input('Commander where should we fire? (example:B3) -> ')
+    user_guess_letter = (letter2num[user_guess[0]])
+    user_guess_num = int(user_guess[1])
+    if battlefield[user_guess_num][user_guess_letter] == 'X' or battlefield[user_guess_num][user_guess_letter] == 'v' :
+        print(f"We have already fired in that location!")
+        user_turn()
+    elif comp_board[user_guess_num][user_guess_letter] == 'X':
+        comp_ships_left -= 1
+        print(f"That's a hit! We have sunk one of the enemy ships! There are {comp_ships_left} left")
+        battlefield[user_guess_num][user_guess_letter] = 'X'
+        drawboard(battlefield)
+    else:
+        print("That's a miss")
+        battlefield[user_guess_num][user_guess_letter] = 'v'
+        drawboard(battlefield)
+
+def comp_turn():
+    row = random.randint(0, 4)
+    col = random.randint(0, 4)
+    if comp_board[row][col] != 'X':
+        comp_board[row][col] = 'X'
+        i = i + 1
+
+def wincheck():
+    return True
+    if user_ships_left <= 0:
+        return False
+        print('The enemy has sunk all our battleships!')
+        exit()
+    elif comp_ships_left <= 0:
+        return False
+        print('Congratulations commander. We have sunk all enemy battleships!')
+        exit()
+
+
+def gameplay():
+    intro()
+    user_place_ships()
+    comp_place_ships()
+    while wincheck():
+        user_turn()
+        wincheck()
 
 
 
-
-
-comp_place_ships()
-
+#comp_place_ships()
+#user_turn()
+gameplay()
 
 '''
 # In the first version of my battleship game, the board will be a 5 x 5 board with letters on the x - axis and numbers on the y axis
