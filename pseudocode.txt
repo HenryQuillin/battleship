@@ -1,8 +1,114 @@
-//
-output "Welcome to battleship"
+Welcome to battle ship
+
+'~' = unknown location
+'O' = your battleship
+'V' = missed shot
+'X' = sunken ship
+
+user_place_ships()
+-----------------
+    PCODE:
+    output "Commander, where should we send our battleships?"
+    DRAWBOARD(BOARD)
+    loop SHIP from 0 to 4
+        CURRENT_SHIP = SHIP + 1
+        USER_SHIPS_INPUT = input "Please enter the location of ship number ", CURRENT SHIP, " (example:A3) -> "
+        USER_SHIP_LETTER = USER_SHIPS_INPUT[0]
+        USER_SHIP_NUM = int USER_SHIPS_INPUT[1]
+        BOARD[USER_SHIP_NUM][LETTER2NUM[USER_SHIP_LETTER]] = 'O'
+        DRAWBOARD(BOARD)
+    end loop
+
+    PYTHON:
+    def user_place_ships():
+        global board
+        print('Commander, where should we send our battleships?')
+        drawboard(board)
+        for ship in range(5):
+            user_ships_input = input(f'Please enter the location of ship number {ship + 1} (example:A3) -> ')
+            user_ship_letter = user_ships_input[0]
+            user_ship_num = int(user_ships_input[1])
+            board[user_ship_num][letter2num[user_ship_letter]] = 'O'
+            drawboard(board)
+
+comp_turn()
+------------
+    PCODE:
+    ROW = RANDOM.randint(0, 4)
+    COL = RANDOM.randint(0, 4)
+    if BOARD[ROW][COL] = 'O' then
+        BOARD[ROW][COL] = 'X'
+        output 'the enemy has sunk one of our battleships!'
+        DRAWBOARD(BOARD)
+    else if BOARD[ROW][COL] = 'v' or BOARD[ROW][COL] = 'X' then
+        comp_turn()
+    else
+        BOARD[ROW][COL] = 'v'
+        output 'The enemy has missed our battleship'
+        DRAWBOARD(BOARD)
+    end if
 
 
-def drawboard():
+    PYTHON:
+    def comp_turn():
+        row = random.randint(0, 4)
+        col = random.randint(0, 4)
+        if board[row][col] == 'O':
+            board[row][col] = 'X'
+            print('The enemy has sunk one of our battleships!')
+            drawboard(board)
+        elif board[row][col] == 'v' or board[row][col] == 'X':
+            comp_turn()
+        else:
+            board[row][col] = 'v'
+            print('The enemy has missed our battleship')
+            drawboard(board)
+
+intro()
+---------
+    PCODE:
+    output "
+                       Welcome to Battleship
+                       --------------------
+
+                                      )___(
+                               _______/__/_
+                      ___     /===========|   ___
+     ____       __   [\\\]___/____________|__[///]   __
+     \   \_____[\\]__/___________________________\__[//]___
+      \40A                                                 |
+       \                                                  /
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    '~' = unknown location
+    'O' = your battleship
+    'V' = missed shot
+    'X' = sunken ship
+    "
+
+    PYTHON:
+    def intro():
+        print(r'''
+                       Welcome to Battleship
+                       --------------------
+
+                                      )___(
+                               _______/__/_
+                      ___     /===========|   ___
+     ____       __   [\\\]___/____________|__[///]   __
+     \   \_____[\\]__/___________________________\__[//]___
+      \40A                                                 |
+       \                                                  /
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    '~' = unknown location
+    'O' = your battleship
+    'V' = missed shot
+    'X' = sunken ship
+    ''')
+
+drawboard()
+----------
+    PCODE:
+
     loop ROW from 0 to 5
         loop COL from 0 to 5
             board[ROW][COL] = '~'
@@ -13,29 +119,5 @@ def drawboard():
         output board[ROW]
     end loop
 
-def letter_to_num():
 
-PCODE:
-user_place_ships():
-output "Commander, where should we send our battleships?"
-DRAWBOARD(BOARD)
-loop SHIP from 0 to 4
-    CURRENT_SHIP = SHIP + 1
-    USER_SHIPS_INPUT = input "Please enter the location of ship number", CURRENT SHIP, "(example:A3) -> "
-    USER_SHIP_LETTER = USER_SHIPS_INPUT[0]
-    USER_SHIP_NUM = int(USER_SHIPS_INPUT[1])
-    BOARD[USER_SHIP_NUM][LETTER2NUM[USER_SHIP_LETTER]] = 'O'
-    DRAWBOARD(BOARD)
-end loop
 
-PYTHON:
-def user_place_ships():
-    global board
-    print('Commander, where should we send our battleships?')
-    drawboard(board)
-    for ship in range(5):
-        user_ships_input = input(f'Please enter the location of ship number {ship + 1} (example:A3) -> ')
-        user_ship_letter = user_ships_input[0]
-        user_ship_num = int(user_ships_input[1])
-        board[user_ship_num][letter2num[user_ship_letter]] = 'O'
-        drawboard(board)

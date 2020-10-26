@@ -19,6 +19,10 @@ def intro():
   \40A                                                 |
    \                                                  /
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+'~' = unknown location 
+'O' = your battleship 
+'V' = missed shot 
+'X' = sunken ship 
 ''')
 
 
