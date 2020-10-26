@@ -14,3 +14,28 @@ def drawboard():
     end loop
 
 def letter_to_num():
+
+PCODE:
+user_place_ships():
+output "Commander, where should we send our battleships?"
+DRAWBOARD(BOARD)
+loop SHIP from 0 to 4
+    CURRENT_SHIP = SHIP + 1
+    USER_SHIPS_INPUT = input "Please enter the location of ship number", CURRENT SHIP, "(example:A3) -> "
+    USER_SHIP_LETTER = USER_SHIPS_INPUT[0]
+    USER_SHIP_NUM = int(USER_SHIPS_INPUT[1])
+    BOARD[USER_SHIP_NUM][LETTER2NUM[USER_SHIP_LETTER]] = 'O'
+    DRAWBOARD(BOARD)
+end loop
+
+PYTHON:
+def user_place_ships():
+    global board
+    print('Commander, where should we send our battleships?')
+    drawboard(board)
+    for ship in range(5):
+        user_ships_input = input(f'Please enter the location of ship number {ship + 1} (example:A3) -> ')
+        user_ship_letter = user_ships_input[0]
+        user_ship_num = int(user_ships_input[1])
+        board[user_ship_num][letter2num[user_ship_letter]] = 'O'
+        drawboard(board)
