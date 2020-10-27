@@ -4,8 +4,7 @@ Henry Quillin
 Battleship
 '''
 import random
-
-
+from colored import fg, bg, attr
 def intro():
     print(r'''
                    Welcome to Battleship
@@ -18,12 +17,12 @@ def intro():
  \   \_____[\\]__/___________________________\__[//]___
   \40A                                                 |
    \                                                  /
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%s~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%s
 '~' = unknown location 
 'O' = your battleship 
 'V' = missed shot 
 'X' = sunken ship 
-''')
+''' % (fg(4), attr(0)))
 
 
 board = [
@@ -67,10 +66,11 @@ def drawboard(board):
         location = 'Enemy Waters'
     else:
         location = 'Friendly Waters'
+    
     print(f'''
      {board[5]}
            --
-        A B C D E 
+     %s   A B C D E 
        ___________
     0 | {board[0][letter2num['A']]} {board[0][letter2num['B']]} {board[0][letter2num['C']]} {board[0][letter2num['D']]} {board[0][letter2num['E']]} |                                  
     1 | {board[1][letter2num['A']]} {board[1][letter2num['B']]} {board[1][letter2num['C']]} {board[1][letter2num['D']]} {board[1][letter2num['E']]} |
@@ -78,8 +78,8 @@ def drawboard(board):
     3 | {board[3][letter2num['A']]} {board[3][letter2num['B']]} {board[3][letter2num['C']]} {board[3][letter2num['D']]} {board[3][letter2num['E']]} |
     4 | {board[4][letter2num['A']]} {board[4][letter2num['B']]} {board[4][letter2num['C']]} {board[4][letter2num['D']]} {board[4][letter2num['E']]} |
        -----------
-    ''')
-
+    %s''' % (fg(4), attr(0)))
+    
 
 def user_place_ships():
     global board
@@ -163,7 +163,8 @@ def gameplay():
     print('''
     _      _      _      _      _      _      _      _
     )`'-.,_)`'-.,_)`'-.,_)`'-.,_)`'-.,_)`'-.,_)`'-.,_)`'-.,_
-        ''')
+    
+    ''')
     while wincheck():
         user_turn()
         comp_turn()
