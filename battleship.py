@@ -4,6 +4,7 @@ Henry Quillin
 Battleship
 '''
 import random
+import time
 from colored import fg, bg, attr
 def intro():
     print(r'''
@@ -107,9 +108,9 @@ def comp_place_ships():
 def user_turn():
     global comp_ships_left
     global battlefield
-
+    print('Commander where should we fire? ')
     drawboard(battlefield)
-    user_guess = input('Commander where should we fire? (example:B3) -> ')
+    user_guess = input('(example:B3) -> ')
     user_guess_letter = (letter2num[user_guess[0]])
     user_guess_num = int(user_guess[1])
     if battlefield[user_guess_num][user_guess_letter] == 'X' or battlefield[user_guess_num][user_guess_letter] == 'v':
@@ -150,10 +151,7 @@ def wincheck():
         exit()
     elif comp_ships_left <= 0:
         print('Congratulations commander. We have sunk all enemy battleships!')
-        return False
         exit()
-    return True
-
 
 def gameplay():
     intro()
@@ -165,9 +163,12 @@ def gameplay():
     )`'-.,_)`'-.,_)`'-.,_)`'-.,_)`'-.,_)`'-.,_)`'-.,_)`'-.,_
     
     ''')
-    while wincheck():
+    while wincheck is not False:
         user_turn()
+        print('The enemy is making their move...')
+        time.sleep(3.5)
         comp_turn()
+        time.sleep(2)
         wincheck()
 
 
